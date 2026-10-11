@@ -1,11 +1,9 @@
-from numpy import printoptions
-from IPython.utils.PyColorize import pride_theme
 from pathlib import Path
 import tensorflow as tf
 
 # FASE 0 - INGESTA DE DATOS
 BASE_DIR = Path(__file__).resolve().parent
-db_path = BASE_DIR / 'db' / 'The_Festival.txt'
+db_path = BASE_DIR / 'data' / 'The_Festival.txt'
 
 text = db_path.read_text(encoding='utf-8')
 print(f'Longitud del texto: {len(text)} caracteres.\n')
