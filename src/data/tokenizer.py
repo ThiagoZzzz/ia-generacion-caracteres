@@ -1,5 +1,4 @@
 from src.data.preprocess  import read_text
-
 text = read_text();
 # obtenemos ocurrencias únicas de cada caracter en el texto (crear set) y lo ordenamos (sorted)
 vocabulary = sorted(set(text))
