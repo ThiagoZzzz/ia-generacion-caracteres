@@ -1,0 +1,10 @@
+# TP Final IA 2026 — Generación de caracteres (Lovecraft)
+# Stack: TensorFlow/Keras + scikit-learn
+
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tensorflow
+

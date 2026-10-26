@@ -1,1 +1,22 @@
+# Entornos virtuales de Python
+venv/
+.venv/
+env/
+.env/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Checkpoints y caché de Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Archivos de entorno y SO
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos pesados o innecesarios
 /db/pg68553-images.html
