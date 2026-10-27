@@ -1,0 +1,8 @@
+{
+  "modelo": "OneHot_ultimos_5_chars + LogisticRegression",
+  "K": 5,
+  "metrica_principal": "accuracy_dev",
+  "accuracy_dev": 0.4083333333333333,
+  "accuracy_dummy_dev": 0.17847222222222223,
+  "n_dev": 2880
+}
