@@ -56,7 +56,7 @@ def clean_txt(input_path: Path, output_path: Path) -> None:
     print(f"[preprocess] Caracteres antes: {len(text)} | Caracteres conservados: {len(clean_text)}.")
 
 def read_text (text_path: str) -> str:
-    if (not Path(text_path)).exists():
+    if not Path(text_path).exists():
         print (f"[preprocess] El archivo con el texto limpio no existe en {text_path}, pruebe crearlo primero.")
         return
     

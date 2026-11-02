@@ -1,11 +1,15 @@
+from tensorflow import Tensor
 from tensorflow.data import Dataset
 import tensorflow as tf
 
+# ventana de contexto (cantidad de caracteres de la secuencia de entrada)
 seq_length = 100;
-BATCH_SIZE = 64;
+# tamaño de los bloques de entrenamiento
+BATCH_SIZE = 16;
+# memoria asignada para tomar muestras al azar (si es que se requiere)
 BUFFER_SIZE = 100000;
 
-def create_dataset(ids_tensor, shuffle=False) -> Dataset:
+def create_dataset(ids_tensor: Tensor, shuffle=False) -> Dataset:
     # Crear flujo de datos desde los IDs
     ds = Dataset.from_tensor_slices(ids_tensor)
     
