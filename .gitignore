@@ -9,3 +9,6 @@ __pycache__/
 .venv/
 venv/
 env/
+
+# Pruebas
+src/utils/dev
