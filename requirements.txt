@@ -1,3 +1,6 @@
+# Modelos clásicos de Machine Learning (Baseline de Regresión Logística) y métricas de evaluación
+scikit-learn>=1.4.0
+
 # Modelado de Redes Neuronales (RNN, LSTM), Tokenización y TF Data Pipeline
 tensorflow>=2.15.0
 
@@ -7,6 +10,3 @@ numpy>=1.26.0
 # Visualización de datos y gráficos exploratorios
 matplotlib>=3.8.0
 seaborn>=0.13.0
-
-# Modelos clásicos de Machine Learning (Baseline de Regresión Logística) y métricas de evaluación
-scikit-learn>=1.4.0
