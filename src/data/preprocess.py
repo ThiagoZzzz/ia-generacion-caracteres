@@ -61,3 +61,11 @@ def read_text (text_path: str) -> str:
         return
     
     return Path(text_path).read_text(encoding='utf-8')
+
+# extrae secuencias continuas de letras o números.
+def extract_words(text: str) -> list[str]:
+    pattern = r'[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ]+'
+    words = re.findall(pattern, text)
+    
+    print(f"[preprocess] Palabras extraídas: {len(words)}")
+    return words

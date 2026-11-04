@@ -27,3 +27,15 @@ def create_dataset(ids_tensor: Tensor, shuffle=False) -> Dataset:
         dataset = dataset.shuffle(BUFFER_SIZE)
         
     return dataset.batch(BATCH_SIZE, drop_remainder=True).prefetch(tf.data.AUTOTUNE)
+
+def create_words_dataset(words: list[str]) -> list[dict]:
+    dataset = [
+        {
+            "word": word,
+            "length": len(word)
+        }
+        for word in words
+    ]
+    
+    print(f"[dataset] Dataset de palabras generado con {len(dataset)} registros.")
+    return dataset
