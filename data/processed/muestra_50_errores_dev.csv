@@ -1,0 +1,51 @@
+dev_idx,contexto,y_real,y_pred,causa_teorica,categoria_ling
+1839,g. Af,t, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+1320, and ,a,t,Ruido irreducible (Error Bayes),Consonantes / Dígrafos
+1379,ied. ,H,T,Falta de cobertura (5-grama nuevo),Mayúsculas / Nombres propios
+666, old ,P,m,Ruido irreducible (Error Bayes),Mayúsculas / Nombres propios
+1810,e age,d, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+2791, a na,s,t,Sesgo (Underfitting),Consonantes / Dígrafos
+460,"692, ",b,t,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+2573,e I c,o,a,Sesgo (Underfitting),Confusión entre vocales
+905, in m,e,a,Falta de cobertura (5-grama nuevo),Confusión entre vocales
+2161, that,c, ,Ruido irreducible (Error Bayes),Atracción por clase mayoritaria (<SP>)
+37,e twi,l,n,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+1009,ernes,s, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+206,ing. ,A,T,Ruido irreducible (Error Bayes),Mayúsculas / Nombres propios
+1591,the f,e,o,Ruido irreducible (Error Bayes),Confusión entre vocales
+634, the ,s,t,Ruido irreducible (Error Bayes),Consonantes / Dígrafos
+1062,stoms,., ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+1106,y foo,t,n,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+1413,ndlel,i,y,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+428,smen ,o,t,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+1904,ettle,",", ,Varianza (Overfitting),Atracción por clase mayoritaria (<SP>)
+2570,here ,I,t,Ruido irreducible (Error Bayes),Mayúsculas / Nombres propios
+934,e str,a,e,Sesgo (Underfitting),Confusión entre vocales
+2667,from ,d,t,Ruido irreducible (Error Bayes),Consonantes / Dígrafos
+1631,ger f,r,o,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+767,stree,t, ,Sesgo (Underfitting),Atracción por clase mayoritaria (<SP>)
+336,that ,s,t,Ruido irreducible (Error Bayes),Consonantes / Dígrafos
+144,s wri,t,c,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+571, a vi,l,r,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+1757, me. ,T,I,Ruido irreducible (Error Bayes),Mayúsculas / Nombres propios
+628,ght o,f,u,Sesgo (Underfitting),Consonantes / Dígrafos
+2105, nerv,o,e,Falta de cobertura (5-grama nuevo),Confusión entre vocales
+2488,prete,r, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+2462,led b,y,e,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+431,n of ,m,t,Sesgo (Underfitting),Consonantes / Dígrafos
+485,ust w,h,a,Varianza (Overfitting),Consonantes / Dígrafos
+1127,e doo,r,n,Sesgo (Underfitting),Consonantes / Dígrafos
+1751,rifie,d,n,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+2300,acros,s, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+1105,ny fo,o,r,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+2459,ostle,d, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+1270, he m,a,o,Varianza (Overfitting),Confusión entre vocales
+134,ing w,i,a,Ruido irreducible (Error Bayes),Confusión entre vocales
+339,t soa,r,n,Falta de cobertura (5-grama nuevo),Consonantes / Dígrafos
+1042,d tow,n, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+801, draw,n, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+1938,d shu,d,t,Sesgo (Underfitting),Consonantes / Dígrafos
+1978,k boo,t, ,Falta de cobertura (5-grama nuevo),Atracción por clase mayoritaria (<SP>)
+540,isten,e, ,Ruido irreducible (Error Bayes),Atracción por clase mayoritaria (<SP>)
+1124, the ,d,t,Ruido irreducible (Error Bayes),Consonantes / Dígrafos
+2421,ongs ,I,a,Falta de cobertura (5-grama nuevo),Confusión entre vocales

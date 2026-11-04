@@ -3,6 +3,11 @@
   "K": 5,
   "metrica_principal": "accuracy_dev",
   "accuracy_dev": 0.4083333333333333,
+  "accuracy_train": 0.42965571205007824,
+  "loss_dev": 2.085342235716017,
+  "perplejidad_dev": 8.04734509938978,
+  "parametros_entrenables": 19908,
+  "tiempo_entrenamiento_s": 1.5262649001087993,
   "accuracy_dummy_dev": 0.17847222222222223,
   "n_dev": 2880
 }
