@@ -10,5 +10,8 @@ __pycache__/
 venv/
 env/
 
+# Entorno dev
+project/
+
 # Pruebas
 src/utils/dev
