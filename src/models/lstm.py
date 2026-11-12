@@ -2,12 +2,18 @@ import numpy as np
 import tensorflow as tf
 from src.data.tokenizer import Tokenizer
 from src.utils.config import SEQ_LENGTH, TRAINING_CONFIG
+from src.utils.types import (
+    ModelConfig,
+    validate_model_config,
+    validate_positive_int,
+)
+
 
 def build_pretrained_embedding_matrix(
     train_ids: tf.Tensor | np.ndarray,
     vocab_size: int,
     embedding_dim: int,
-    window_size: int = TRAINING_CONFIG["pretrain_cooccurrence_window"],
+    window_size: int = TRAINING_CONFIG["pretrain_concurrence_window"],
 ) -> np.ndarray:
     """
     Construye una matriz de embeddings pre-entrenados a nivel de carácter (|V| x embedding_dim)
@@ -16,11 +22,19 @@ def build_pretrained_embedding_matrix(
     Utiliza una matriz de co-ocurrencia contextual ponderada por distancia + Positive Pointwise
     Mutual Information (PPMI) y factorización SVD truncada (equivalente matricial a Skip-Gram / Word2Vec).
     """
+    validate_positive_int(vocab_size, "vocab_size", context="build_pretrained_embedding_matrix")
+    validate_positive_int(embedding_dim, "embedding_dim", context="build_pretrained_embedding_matrix")
+    validate_positive_int(window_size, "window_size", context="build_pretrained_embedding_matrix")
+
+    if train_ids is None or len(train_ids) <= window_size:
+        raise ValueError(
+            "[build_pretrained_embedding_matrix] 'train_ids' debe contener más tokens que 'window_size'."
+        )
+
     ids_array = train_ids.numpy() if hasattr(train_ids, "numpy") else np.asarray(train_ids)
     cooccurrence = np.zeros((vocab_size, vocab_size), dtype=np.float64)
 
     # 1. Conteo de co-ocurrencias simétricas dentro de la ventana deslizante
-    n_tokens = len(ids_array)
     for offset in range(1, window_size + 1):
         weight = 1.0 / offset  # Mayor peso a caracteres más cercanos
         left = ids_array[:-offset]
@@ -59,7 +73,7 @@ def build_pretrained_embedding_matrix(
 
 def build_lstm_model(
     vocab_size: int,
-    config: dict,
+    config: ModelConfig,
     pretrained_matrix: np.ndarray | None = None,
     model_name: str = "lstm_model",
 ) -> tf.keras.Model:
@@ -73,13 +87,16 @@ def build_lstm_model(
           -> Dense intermedia (proyección no lineal sobre estados/embeddings) + Dropout opcional
           -> Dense final (logits sobre el vocabulario |V|)
     """
+    validate_positive_int(vocab_size, "vocab_size", context=model_name)
+    validate_model_config(config, name=model_name)
+
     embedding_dim = int(config["embedding_dim"])
     rnn_units = int(config["rnn_units"])
-    dense_units = int(config.get("dense_units", 0))
-    dropout_rate = float(config.get("dropout", 0.0))
-    recurrent_dropout_rate = float(config.get("recurrent_dropout", 0.0))
-    use_pretrained = bool(config.get("use_pretrained", False))
-    trainable_embedding = bool(config.get("trainable_embedding", True))
+    dense_units = int(config["dense_units"])
+    dropout_rate = float(config["dropout"])
+    recurrent_dropout_rate = float(config["recurrent_dropout"])
+    use_pretrained = bool(config["use_pretrained"])
+    trainable_embedding = bool(config["trainable_embedding"])
 
     # 1. Configuración de la capa Embedding dentro de la arquitectura del modelo
     if use_pretrained:
@@ -157,6 +174,17 @@ def generate_text(
     Genera secuencias de texto carácter por carácter de forma autorregresiva
     aplicando muestreo estocástico reescalado por temperatura (T).
     """
+    if not isinstance(model, tf.keras.Model):
+        raise TypeError("[generate_text] 'model' debe ser una instancia de tf.keras.Model.")
+    if not isinstance(tokenizer, Tokenizer):
+        raise TypeError("[generate_text] 'tokenizer' debe ser una instancia de Tokenizer.")
+    if not isinstance(seed_text, str) or not seed_text:
+        raise ValueError("[generate_text] 'seed_text' debe ser un string no vacío.")
+    validate_positive_int(num_chars, "num_chars", context="generate_text")
+    validate_positive_int(max_context_length, "max_context_length", context="generate_text")
+    if not isinstance(temperature, (int, float)) or isinstance(temperature, bool) or temperature <= 0.0:
+        raise ValueError(f"[generate_text] 'temperature' debe ser > 0.0 (recibido: {temperature}).")
+
     input_ids = tokenizer.encode(seed_text)
     input_tensor = tf.expand_dims(input_ids, axis=0)  # Forma: [1, seq_len]
 
