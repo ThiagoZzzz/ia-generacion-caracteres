@@ -1,12 +1,10 @@
-from pathlib import Path
+from src.data.preprocess import clean_txt
+from src.utils.config import RAW_DATA_PATH, PROCESSED_DATA_PATH
 
-# FASE 0 - INGESTA DE DATOS
-BASE_DIR = Path(__file__).resolve().parent
-db_path = BASE_DIR / 'db' / 'The_Festival.txt'
+def main():
+    print("Iniciando pipeline...")
+    
+    clean_txt(RAW_DATA_PATH, PROCESSED_DATA_PATH)
 
-text = db_path.read_text(encoding='utf-8')
-print(f'Longitud del texto: {len(text)} caracteres.\n')
-
-# obtenemos ocurrencias únicas de cada caracter en el texto (crear set) y lo ordenamos (sorted)
-vocabulary = sorted(set(text))
-print(f"Vocabulario ordenado: {vocabulary} \n {len(set(vocabulary))} caracteres únicos.")
+if __name__ == "__main__":
+    main()
