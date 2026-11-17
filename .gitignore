@@ -20,3 +20,6 @@ desktop.ini
 
 # Archivos pesados o innecesarios
 /db/pg68553-images.html
+
+# Embeddings pre-entrenados (los descarga el notebook de la Etapa 3)
+data/external/

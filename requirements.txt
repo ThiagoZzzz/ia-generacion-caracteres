@@ -1,10 +1,13 @@
 # TP Final IA 2026 — Generación de caracteres (Lovecraft)
 # Stack: TensorFlow/Keras + scikit-learn
+# Versiones del entorno donde se ejecutaron los notebooks (Python 3.12.10, Windows, CPU)
 
-numpy
-pandas
-matplotlib
-seaborn
-scikit-learn
-tensorflow
+numpy==2.5.4
+pandas==3.1.0
+matplotlib==3.11.2
+seaborn==0.13.2
+scikit-learn==1.9.1
+tensorflow==2.21.0
+keras==3.15.1
+jupyter==1.1.1
 
