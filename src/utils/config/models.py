@@ -14,7 +14,7 @@ STAGE_2_REFERENCE: Stage2Reference = {
 # - trainable_embedding: True (pesos optimizables en backpropagation) vs False (congelados)
 MODEL_CONFIGS: dict[str, ModelConfig] = {
     "lstm_baseline": {
-        "description": "LSTM base con embeddings entrenados desde cero y sin dropout",
+        "description": "LSTM base con embeddings entrenados desde cero y sin dropout ni early stopping",
         "embedding_dim": 64,
         "rnn_units": 128,
         "dense_units": 64,
@@ -22,6 +22,7 @@ MODEL_CONFIGS: dict[str, ModelConfig] = {
         "recurrent_dropout": 0.0,
         "use_pretrained": False,
         "trainable_embedding": True,
+        "use_early_stopping": False,
         "learning_rate": 1e-3,
     },
     "lstm_regularized": {
@@ -33,6 +34,7 @@ MODEL_CONFIGS: dict[str, ModelConfig] = {
         "recurrent_dropout": 0.1,
         "use_pretrained": False,
         "trainable_embedding": True,
+        "use_early_stopping": True,
         "learning_rate": 5e-4,
     },
     "lstm_pretrained_frozen": {
@@ -44,6 +46,7 @@ MODEL_CONFIGS: dict[str, ModelConfig] = {
         "recurrent_dropout": 0.0,
         "use_pretrained": True,
         "trainable_embedding": False,
+        "use_early_stopping": True,
         "learning_rate": 1e-3,
     },
     "lstm_pretrained_finetuned": {
@@ -55,6 +58,7 @@ MODEL_CONFIGS: dict[str, ModelConfig] = {
         "recurrent_dropout": 0.0,
         "use_pretrained": True,
         "trainable_embedding": True,
+        "use_early_stopping": True,
         "learning_rate": 5e-4,
     },
 }

@@ -10,8 +10,8 @@ BUFFER_SIZE = 100_000
 
 # Parámetros generales del bucle de entrenamiento y regularización
 TRAINING_CONFIG: TrainingConfig = {
-    "epochs": 30,
-    "early_stopping_patience": 5,
+    "epochs": 100,
+    "early_stopping_patience": 10,
     "early_stopping_min_delta": 1e-3,
     "reduce_learning_rate_patience": 3,
     "reduce_learning_rate_factor": 0.5,
@@ -23,7 +23,7 @@ TRAINING_CONFIG: TrainingConfig = {
 EVALUATION_CONFIG: EvaluationConfig = {
     "hard_examples_count": 10,       # Mínimo de ejemplos difíciles exigidos
     "hard_examples_context": 40,     # Cantidad de caracteres previos a mostrar como contexto
-    "generation_temperatures": [0.3, 0.7, 1.1],
+    "generation_temperatures": [0.3, 0.7, 1.0, 1.1],
     "generation_num_chars": 200,
     "generation_seed_text": "The ancient town of Kingsport",
 }

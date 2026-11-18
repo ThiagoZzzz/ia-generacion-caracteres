@@ -32,4 +32,5 @@ class ModelConfig(TypedDict):
     recurrent_dropout: float
     use_pretrained: bool
     trainable_embedding: bool
+    use_early_stopping: bool
     learning_rate: float
