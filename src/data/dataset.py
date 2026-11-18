@@ -24,7 +24,8 @@ def create_dataset(ids_tensor: Tensor, shuffle: bool = False) -> Dataset:
     if shuffle:
         dataset = dataset.shuffle(BUFFER_SIZE)
 
-    return dataset.batch(BATCH_SIZE, drop_remainder=True).prefetch(tf.data.AUTOTUNE)
+    # drop_remainder=False en el lote externo para no descartar secuencias de validación/test
+    return dataset.batch(BATCH_SIZE, drop_remainder=False).prefetch(tf.data.AUTOTUNE)
 
 
 def create_words_dataset(words: list[str]) -> list[dict]:
