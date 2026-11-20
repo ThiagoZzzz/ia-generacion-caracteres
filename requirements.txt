@@ -4,6 +4,9 @@ scikit-learn>=1.4.0
 # Modelado de Redes Neuronales (RNN, LSTM), Tokenización y TF Data Pipeline
 tensorflow>=2.15.0
 
+# Embeddings pre-entrenados (GloVe / Word2Vec)
+gensim>=4.3.0
+
 # Procesamiento numérico y operaciones matriciales
 numpy>=1.26.0
 

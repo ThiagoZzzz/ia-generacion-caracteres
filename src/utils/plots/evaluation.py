@@ -64,12 +64,16 @@ def format_comparison_table(
         else:
             delta_str = "N/A (Ref=0)"
 
+        l1_str = f"{cfg['l1_reg']:.0e}" if cfg["l1_reg"] > 0 else "0"
+        l2_str = f"{cfg['l2_reg']:.0e}" if cfg["l2_reg"] > 0 else "0"
+
         rows.append(
             {
                 "Modelo": key,
                 "Embeddings": emb_type,
                 "Dim (E/L/D)": f"{cfg['embedding_dim']}/{cfg['rnn_units']}/{cfg['dense_units']}",
                 "Dropout (In/Rec)": f"{cfg['dropout']:.1f}/{cfg['recurrent_dropout']:.1f}",
+                "L1 / L2": f"{l1_str}/{l2_str}",
                 "LR": f"{cfg['learning_rate']:.0e}",
                 "Early Stop": "Sí" if cfg["use_early_stopping"] else "No",
                 "Parámetros (Entr.)": f"{res['total_params']:,} ({res['trainable_params']:,})",
