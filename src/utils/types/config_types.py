@@ -30,6 +30,8 @@ class ModelConfig(TypedDict):
     dense_units: int
     dropout: float
     recurrent_dropout: float
+    l1_reg: float
+    l2_reg: float
     use_pretrained: bool
     trainable_embedding: bool
     use_early_stopping: bool

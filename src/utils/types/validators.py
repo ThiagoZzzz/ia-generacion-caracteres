@@ -126,6 +126,10 @@ def validate_model_config(config: ModelConfig, name: str = "ModelConfig") -> Non
         raise ValueError(
             f"[{name}] 'recurrent_dropout' debe estar en [0.0, 1.0) (recibido: {config['recurrent_dropout']})."
         )
+    if config["l1_reg"] < 0.0:
+        raise ValueError(f"[{name}] 'l1_reg' debe ser >= 0.0 (recibido: {config['l1_reg']}).")
+    if config["l2_reg"] < 0.0:
+        raise ValueError(f"[{name}] 'l2_reg' debe ser >= 0.0 (recibido: {config['l2_reg']}).")
     if config["learning_rate"] <= 0.0:
         raise ValueError(f"[{name}] 'learning_rate' debe ser > 0.0 (recibido: {config['learning_rate']}).")
 
