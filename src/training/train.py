@@ -162,7 +162,7 @@ def compile_model(model: tf.keras.Model, learning_rate: float = 1e-3) -> tf.kera
         raise ValueError(f"[compile_model] 'learning_rate' debe ser > 0.0 (recibido: {learning_rate}).")
 
     model.compile(
-        optimizer=tf.keras.optimizers.Adam(learning_rate=float(learning_rate)),
+        optimizer=tf.keras.optimizers.Adam(learning_rate=float(learning_rate), clipnorm=1.0),
         loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=[
             tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy"),
@@ -237,11 +237,22 @@ def train_model(
     raw_history = {k: [float(v) for v in vals] for k, vals in history_obj.history.items()}
     history_dict = cast(TrainingHistory, raw_history)
     val_losses = raw_history.get("val_loss", [])
-    best_idx = int(np.argmin(val_losses)) if val_losses else 0
+    val_ppls = raw_history.get("val_perplexity", [])
 
-    best_val_loss = float(val_losses[best_idx]) if val_losses else float("nan")
-    best_val_ppl = float(np.exp(best_val_loss)) if val_losses else float("nan")
-    best_val_bpc = float(best_val_loss / np.log(2.0)) if val_losses else float("nan")
+    if val_ppls:
+        best_idx = int(np.argmin(val_ppls))
+        best_val_ppl = float(val_ppls[best_idx])
+        best_val_loss = float(np.log(best_val_ppl))
+    elif val_losses:
+        best_idx = int(np.argmin(val_losses))
+        best_val_loss = float(val_losses[best_idx])
+        best_val_ppl = float(np.exp(best_val_loss))
+    else:
+        best_idx = 0
+        best_val_loss = float("nan")
+        best_val_ppl = float("nan")
+
+    best_val_bpc = float(best_val_loss / np.log(2.0)) if not np.isnan(best_val_loss) else float("nan")
     best_val_acc = (
         float(raw_history["val_accuracy"][best_idx])
         if "val_accuracy" in raw_history and len(raw_history["val_accuracy"]) > best_idx
@@ -289,8 +300,13 @@ def evaluate_model(
 
     eval_output = model.evaluate(dataset, verbose=verbose, return_dict=True)
 
-    loss = float(eval_output.get("loss", float("nan")))
-    perplexity = float(np.exp(loss))
+    raw_loss = float(eval_output.get("loss", float("nan")))
+    if "perplexity" in eval_output and float(eval_output["perplexity"]) > 0.0:
+        perplexity = float(eval_output["perplexity"])
+        loss = float(np.log(perplexity))
+    else:
+        loss = raw_loss
+        perplexity = float(np.exp(loss))
     bpc = float(loss / np.log(2.0))
     accuracy = float(eval_output.get("accuracy", float("nan")))
 
