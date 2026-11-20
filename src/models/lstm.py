@@ -1,7 +1,8 @@
+import gensim.downloader as gensim_api
 import numpy as np
 import tensorflow as tf
 from src.data.tokenizer import Tokenizer
-from src.utils.config import SEQ_LENGTH, TRAINING_CONFIG
+from src.utils.config import SEED, SEQ_LENGTH
 from src.utils.types import (
     ModelConfig,
     validate_model_config,
@@ -10,65 +11,48 @@ from src.utils.types import (
 
 
 def build_pretrained_embedding_matrix(
-    train_ids: tf.Tensor | np.ndarray,
-    vocab_size: int,
-    embedding_dim: int,
-    window_size: int = TRAINING_CONFIG["pretrain_concurrence_window"],
+    vocabulary: list[str],
+    embedding_dim: int = 50,
+    glove_model: str = "glove-wiki-gigaword-50",
+    seed: int = SEED,
 ) -> np.ndarray:
     """
-    Construye una matriz de embeddings pre-entrenados a nivel de carácter (|V| x embedding_dim)
-    calculada exclusivamente sobre el conjunto de entrenamiento (train_ids) para evitar Data Leakage.
+    Construye una matriz de embeddings pre-entrenados (|V| x embedding_dim) cargando
+    vectores externos de GloVe mediante `gensim.downloader` (por defecto `glove-wiki-gigaword-50`).
 
-    Utiliza una matriz de co-ocurrencia contextual ponderada por distancia + Positive Pointwise
-    Mutual Information (PPMI) y factorización SVD truncada (equivalente matricial a Skip-Gram / Word2Vec).
+    Para cada token del vocabulario busca coincidencia exacta o en minúsculas; los símbolos
+    no presentes en GloVe (ej. espacio, salto de línea, `[UNK]`, guión largo) se inicializan
+    con ruido gaussiano pequeño (`std=0.05`) para permitir su aprendizaje en el fine-tuning.
     """
-    validate_positive_int(vocab_size, "vocab_size", context="build_pretrained_embedding_matrix")
+    if not vocabulary:
+        raise ValueError("[build_pretrained_embedding_matrix] 'vocabulary' no puede estar vacío.")
     validate_positive_int(embedding_dim, "embedding_dim", context="build_pretrained_embedding_matrix")
-    validate_positive_int(window_size, "window_size", context="build_pretrained_embedding_matrix")
 
-    if train_ids is None or len(train_ids) <= window_size:
+    glove = gensim_api.load(glove_model)
+    if int(glove.vector_size) != int(embedding_dim):
         raise ValueError(
-            "[build_pretrained_embedding_matrix] 'train_ids' debe contener más tokens que 'window_size'."
+            f"[build_pretrained_embedding_matrix] '{glove_model}' tiene dimensión {glove.vector_size}, "
+            f"pero la configuración solicita embedding_dim={embedding_dim}."
         )
 
-    ids_array = train_ids.numpy() if hasattr(train_ids, "numpy") else np.asarray(train_ids)
-    cooccurrence = np.zeros((vocab_size, vocab_size), dtype=np.float64)
+    vocab_size = len(vocabulary)
+    rng = np.random.default_rng(seed)
+    embeddings = rng.normal(loc=0.0, scale=0.05, size=(vocab_size, embedding_dim)).astype(np.float32)
 
-    # 1. Conteo de co-ocurrencias simétricas dentro de la ventana deslizante
-    for offset in range(1, window_size + 1):
-        weight = 1.0 / offset  # Mayor peso a caracteres más cercanos
-        left = ids_array[:-offset]
-        right = ids_array[offset:]
-        np.add.at(cooccurrence, (left, right), weight)
-        np.add.at(cooccurrence, (right, left), weight)
+    hits = 0
+    for idx, token in enumerate(vocabulary):
+        if token in glove:
+            embeddings[idx] = glove[token]
+            hits += 1
+        elif token.lower() in glove:
+            embeddings[idx] = glove[token.lower()]
+            hits += 1
 
-    # 2. Cálculo de PPMI (Positive Pointwise Mutual Information)
-    total_sum = np.sum(cooccurrence) + 1e-12
-    row_sums = np.sum(cooccurrence, axis=1, keepdims=True) + 1e-12
-    col_sums = np.sum(cooccurrence, axis=0, keepdims=True) + 1e-12
-
-    expected = (row_sums @ col_sums) / total_sum
-    with np.errstate(divide="ignore", invalid="ignore"):
-        pmi = np.log2((cooccurrence + 1e-12) / expected)
-    ppmi = np.maximum(pmi, 0.0)
-
-    # 3. Reducción de dimensionalidad mediante SVD (U * sqrt(S))
-    u_mat, singular_vals, _ = np.linalg.svd(ppmi, full_matrices=False)
-    k = min(embedding_dim, vocab_size)
-    embeddings = u_mat[:, :k] * np.sqrt(singular_vals[:k])
-
-    # Si embedding_dim supera el tamaño del vocabulario, completar dimensiones restantes
-    if embedding_dim > vocab_size:
-        rng = np.random.default_rng(42)
-        pad = rng.normal(loc=0.0, scale=0.05, size=(vocab_size, embedding_dim - vocab_size))
-        embeddings = np.hstack([embeddings, pad])
-
-    # 4. Estandarización a escala compatible con inicializaciones de redes neuronales
-    std = np.std(embeddings)
-    if std > 0:
-        embeddings = (embeddings - np.mean(embeddings)) / std * 0.1
-
-    return embeddings.astype(np.float32)
+    print(
+        f"[lstm] GloVe '{glove_model}' cargado: {hits}/{vocab_size} símbolos cubiertos "
+        f"({hits / vocab_size * 100:.1f}%)."
+    )
+    return embeddings
 
 
 def build_lstm_model(
@@ -95,8 +79,16 @@ def build_lstm_model(
     dense_units = int(config["dense_units"])
     dropout_rate = float(config["dropout"])
     recurrent_dropout_rate = float(config["recurrent_dropout"])
+    l1_reg = float(config["l1_reg"])
+    l2_reg = float(config["l2_reg"])
     use_pretrained = bool(config["use_pretrained"])
     trainable_embedding = bool(config["trainable_embedding"])
+
+    regularizer = (
+        tf.keras.regularizers.L1L2(l1=l1_reg, l2=l2_reg)
+        if (l1_reg > 0.0 or l2_reg > 0.0)
+        else None
+    )
 
     # 1. Configuración de la capa Embedding dentro de la arquitectura del modelo
     if use_pretrained:
@@ -130,6 +122,8 @@ def build_lstm_model(
             dropout=dropout_rate,
             recurrent_dropout=recurrent_dropout_rate,
             recurrent_initializer="glorot_uniform",
+            kernel_regularizer=regularizer,
+            recurrent_regularizer=regularizer,
             name="recurrent_lstm",
         ),
     ]
@@ -140,6 +134,7 @@ def build_lstm_model(
             tf.keras.layers.Dense(
                 units=dense_units,
                 activation="relu",
+                kernel_regularizer=regularizer,
                 name="dense_hidden",
             )
         )
@@ -155,6 +150,7 @@ def build_lstm_model(
     layers.append(
         tf.keras.layers.Dense(
             units=vocab_size,
+            kernel_regularizer=regularizer,
             name="logits_output",
         )
     )
