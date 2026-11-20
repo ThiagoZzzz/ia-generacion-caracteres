@@ -13,6 +13,7 @@ from src.utils.config.training import (
     EVALUATION_CONFIG,
     SEED,
     SEQ_LENGTH,
+    TRAIN_WINDOW_STRIDE,
     TRAINING_CONFIG,
 )
 
@@ -25,6 +26,7 @@ __all__ = [
     "CHECKPOINTS_DIR",
     "SEED",
     "SEQ_LENGTH",
+    "TRAIN_WINDOW_STRIDE",
     "BATCH_SIZE",
     "BUFFER_SIZE",
     "TRAINING_CONFIG",

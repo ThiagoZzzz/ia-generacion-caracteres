@@ -4,13 +4,14 @@ from src.utils.types.config_types import EvaluationConfig, TrainingConfig
 SEED = 42
 
 # Parámetros de ventana temporal y pipeline tf.data
-SEQ_LENGTH = 100
+SEQ_LENGTH = 48
+TRAIN_WINDOW_STRIDE = 5  # Paso de la ventana deslizante en Train (solapamiento para mayor contexto)
 BATCH_SIZE = 16
 BUFFER_SIZE = 100_000
 
 # Parámetros generales del bucle de entrenamiento y regularización
 TRAINING_CONFIG: TrainingConfig = {
-    "epochs": 100,
+    "epochs": 30,
     "early_stopping_patience": 10,
     "early_stopping_min_delta": 1e-3,
     "reduce_learning_rate_patience": 3,
@@ -24,6 +25,6 @@ EVALUATION_CONFIG: EvaluationConfig = {
     "hard_examples_count": 10,       # Mínimo de ejemplos difíciles exigidos
     "hard_examples_context": 40,     # Cantidad de caracteres previos a mostrar como contexto
     "generation_temperatures": [0.3, 0.7, 1.0, 1.1],
-    "generation_num_chars": 200,
+    "generation_num_chars": 50,
     "generation_seed_text": "The ancient town of Kingsport",
 }
