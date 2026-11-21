@@ -4,9 +4,9 @@ from src.utils.types.config_types import ModelConfig, Stage2Reference
 # para calcular la mejora sobre la métrica de número único (Perplejidad y Loss).
 STAGE_2_REFERENCE: Stage2Reference = {
     "model_name": "Etapa 2 - MLP",
-    "val_loss": 2.0363,
-    "val_perplexity": 7.66,
-    "val_accuracy": 0.4871,
+    "val_loss": 1.9510,
+    "val_perplexity": 7.04,
+    "val_accuracy": 0.4680,
 }
 
 # Diccionario de configuraciones de modelos (Etapa 3 - LSTM)
