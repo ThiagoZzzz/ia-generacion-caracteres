@@ -138,10 +138,8 @@ def main() -> None:
             emb_dim = model_cfg["embedding_dim"]
             if emb_dim not in pretrained_matrices_cache:
                 pretrained_matrices_cache[emb_dim] = build_pretrained_embedding_matrix(
-                    train_ids=train_ids,
-                    vocab_size=vocab_size,
+                    vocabulary=tokenizer.get_vocabulary(),
                     embedding_dim=emb_dim,
-                    window_size=TRAINING_CONFIG["pretrain_concurrence_window"],
                 )
             pretrained_matrix = pretrained_matrices_cache[emb_dim]
 
@@ -160,7 +158,7 @@ def main() -> None:
             config=model_cfg,
             training_config=TRAINING_CONFIG,
             checkpoint_path=ckpt_file,
-            verbose=1,
+            log_every_n_epochs=10
         )
 
         results_dict[model_key] = train_result
