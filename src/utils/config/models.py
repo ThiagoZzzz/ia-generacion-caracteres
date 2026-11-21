@@ -1,12 +1,12 @@
 from src.utils.types.config_types import ModelConfig, Stage2Reference
 
-# Valores de referencia de la Etapa 2 (MLP / Red multicapa previa) para calcular
-# la diferencia de la métrica de número único (Perplejidad y Loss).
+# Valores de referencia de la Etapa 2 (MLP 128-64-32 con Dropout 0.05, ganador en Dev)
+# para calcular la mejora sobre la métrica de número único (Perplejidad y Loss).
 STAGE_2_REFERENCE: Stage2Reference = {
-    "model_name": "Etapa 2 - MLP (3 capas ocultas)",
-    "val_loss": 0.0,
-    "val_perplexity": 0.0,
-    "val_accuracy": 0.0,
+    "model_name": "Etapa 2 - MLP",
+    "val_loss": 2.0363,
+    "val_perplexity": 7.66,
+    "val_accuracy": 0.4871,
 }
 
 # Diccionario de configuraciones de modelos (Etapa 3 - LSTM)

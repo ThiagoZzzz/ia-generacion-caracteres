@@ -133,12 +133,13 @@ def plot_perplexity_comparison(
             ref_ppl,
             color="#e74c3c",
             linestyle="--",
-            linewidth=2,
-            label=f"Referencia Etapa 2 ({stage2_reference['model_name']}): PPL = {ref_ppl:.2f}",
+            linewidth=1.8,
+            label=f"Ref. {stage2_reference['model_name']} (PPL = {ref_ppl:.2f})",
         )
-        ax.legend(loc="upper right")
+        ax.legend(loc="upper right", fontsize=9, framealpha=0.9)
 
-    y_offset = max(ppls) * 0.02 if ppls else 0.5
+    max_y = max(max(ppls, default=0.0), ref_ppl)
+    y_offset = max_y * 0.02 if max_y > 0 else 0.5
     for i, val in enumerate(ppls):
         ax.text(i, val + y_offset, f"{val:.2f}", ha="center", fontweight="bold", fontsize=10)
 
@@ -146,10 +147,11 @@ def plot_perplexity_comparison(
         "Comparativa de Métrica de Número Único: Perplejidad en Validación (Dev)",
         fontsize=13,
         fontweight="bold",
+        pad=12,
     )
     ax.set_xlabel("Configuración del Modelo LSTM", fontsize=11)
     ax.set_ylabel("Perplejidad (PPL = exp(Loss))", fontsize=11)
-    ax.set_ylim(bottom=0.0)
+    ax.set_ylim(bottom=0.0, top=max_y * 1.20 if max_y > 0 else 1.0)
     ax.tick_params(axis="x", rotation=15)
     sns.despine(ax=ax)
 
