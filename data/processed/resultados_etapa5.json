@@ -13,7 +13,7 @@
   "corridas": [
     {
       "seed": 42,
-      "tiempo": 41.452722900081426,
+      "tiempo": 46.92782519990578,
       "epocas": 43,
       "dev_acc": 0.5,
       "test_acc": 0.46111111111111114,
@@ -22,7 +22,7 @@
     },
     {
       "seed": 123,
-      "tiempo": 43.644918699748814,
+      "tiempo": 54.1907148999162,
       "epocas": 46,
       "dev_acc": 0.5006944444444444,
       "test_acc": 0.45634920634920634,
@@ -31,7 +31,7 @@
     },
     {
       "seed": 456,
-      "tiempo": 47.83650470012799,
+      "tiempo": 50.68895799992606,
       "epocas": 50,
       "dev_acc": 0.5086805555555556,
       "test_acc": 0.4595238095238095,
@@ -40,7 +40,7 @@
     },
     {
       "seed": 789,
-      "tiempo": 44.70830990001559,
+      "tiempo": 46.77377590024844,
       "epocas": 47,
       "dev_acc": 0.5006944444444444,
       "test_acc": 0.4511904761904762,
@@ -49,7 +49,7 @@
     },
     {
       "seed": 2026,
-      "tiempo": 50.92019940027967,
+      "tiempo": 51.21079330006614,
       "epocas": 48,
       "dev_acc": 0.4934027777777778,
       "test_acc": 0.45674603174603173,
@@ -99,6 +99,43 @@
         "top 10": 0.5334,
         "puestos 11-30": 0.271,
         "puesto 31 o más": 0.0242
+      }
+    },
+    "funcion": {
+      "Casos en Test": {
+        "cierre de palabra (espacio)": 443,
+        "interior de palabra": 1578,
+        "inicio de palabra": 398,
+        "inicio de oración o nombre propio": 48,
+        "puntuación": 53
+      },
+      "% del Test": {
+        "cierre de palabra (espacio)": 17.6,
+        "interior de palabra": 62.6,
+        "inicio de palabra": 15.8,
+        "inicio de oración o nombre propio": 1.9,
+        "puntuación": 2.1
+      },
+      "Accuracy Dev": {
+        "cierre de palabra (espacio)": 0.9066,
+        "interior de palabra": 0.4899,
+        "inicio de palabra": 0.1873,
+        "inicio de oración o nombre propio": 0.1579,
+        "puntuación": 0.0
+      },
+      "Accuracy Test": {
+        "cierre de palabra (espacio)": 0.8628,
+        "interior de palabra": 0.4359,
+        "inicio de palabra": 0.1894,
+        "inicio de oración o nombre propio": 0.1,
+        "puntuación": 0.0264
+      },
+      "Perplejidad Test": {
+        "cierre de palabra (espacio)": 1.8321,
+        "interior de palabra": 7.0855,
+        "inicio de palabra": 17.1914,
+        "inicio de oración o nombre propio": 116.5457,
+        "puntuación": 62.9634
       }
     }
   }
