@@ -23,3 +23,8 @@ desktop.ini
 
 # Embeddings pre-entrenados (los descarga el notebook de la Etapa 3)
 data/external/
+
+# Documentos internos del grupo (no se suben)
+docs/GUIA_DE_ESTUDIO_DEFENSA.md
+docs/RECORRIDO_ETAPA_3.md
+docs/EXPERIMENTOS_RETIRADOS.md

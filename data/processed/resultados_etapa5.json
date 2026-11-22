@@ -1,0 +1,142 @@
+{
+  "ganador": "R4 — LSTM 5 + ES",
+  "config": {
+    "k": 5,
+    "emb_dim": 300,
+    "dropout": 0.05,
+    "lr": 0.0005,
+    "clipnorm": 1.0,
+    "patience": 5,
+    "epocas": 100,
+    "batch": 128
+  },
+  "corridas": [
+    {
+      "seed": 42,
+      "tiempo": 46.92782519990578,
+      "epocas": 43,
+      "dev_acc": 0.5,
+      "test_acc": 0.46111111111111114,
+      "dev_loss": 1.7873294353485107,
+      "test_loss": 1.9537973403930664
+    },
+    {
+      "seed": 123,
+      "tiempo": 54.1907148999162,
+      "epocas": 46,
+      "dev_acc": 0.5006944444444444,
+      "test_acc": 0.45634920634920634,
+      "dev_loss": 1.772376537322998,
+      "test_loss": 1.9627537727355957
+    },
+    {
+      "seed": 456,
+      "tiempo": 50.68895799992606,
+      "epocas": 50,
+      "dev_acc": 0.5086805555555556,
+      "test_acc": 0.4595238095238095,
+      "dev_loss": 1.758665919303894,
+      "test_loss": 1.9492655992507935
+    },
+    {
+      "seed": 789,
+      "tiempo": 46.77377590024844,
+      "epocas": 47,
+      "dev_acc": 0.5006944444444444,
+      "test_acc": 0.4511904761904762,
+      "dev_loss": 1.7818338871002197,
+      "test_loss": 1.979020357131958
+    },
+    {
+      "seed": 2026,
+      "tiempo": 51.21079330006614,
+      "epocas": 48,
+      "dev_acc": 0.4934027777777778,
+      "test_acc": 0.45674603174603173,
+      "dev_loss": 1.7869271039962769,
+      "test_loss": 1.952871561050415
+    }
+  ],
+  "dev_acc_mean": 0.5006944444444444,
+  "test_acc_mean": 0.45698412698412694,
+  "test_acc_std": 0.0037917076779654794,
+  "subgrupos": {
+    "tipo": {
+      "Casos en Test": {
+        "espacio": 443,
+        "vocal": 745,
+        "consonante": 1231,
+        "mayúscula": 48,
+        "puntuación/dígito": 53
+      },
+      "Accuracy Dev": {
+        "espacio": 0.9066,
+        "vocal": 0.4193,
+        "consonante": 0.431,
+        "mayúscula": 0.1579,
+        "puntuación/dígito": 0.0333
+      },
+      "Accuracy Test": {
+        "espacio": 0.8628,
+        "vocal": 0.4046,
+        "consonante": 0.3751,
+        "mayúscula": 0.1,
+        "puntuación/dígito": 0.0264
+      }
+    },
+    "frecuencia": {
+      "Casos en Test": {
+        "top 10": 1817,
+        "puestos 11-30": 670,
+        "puesto 31 o más": 33
+      },
+      "Accuracy Dev": {
+        "top 10": 0.5782,
+        "puestos 11-30": 0.3091,
+        "puesto 31 o más": 0.0952
+      },
+      "Accuracy Test": {
+        "top 10": 0.5334,
+        "puestos 11-30": 0.271,
+        "puesto 31 o más": 0.0242
+      }
+    },
+    "funcion": {
+      "Casos en Test": {
+        "cierre de palabra (espacio)": 443,
+        "interior de palabra": 1578,
+        "inicio de palabra": 398,
+        "inicio de oración o nombre propio": 48,
+        "puntuación": 53
+      },
+      "% del Test": {
+        "cierre de palabra (espacio)": 17.6,
+        "interior de palabra": 62.6,
+        "inicio de palabra": 15.8,
+        "inicio de oración o nombre propio": 1.9,
+        "puntuación": 2.1
+      },
+      "Accuracy Dev": {
+        "cierre de palabra (espacio)": 0.9066,
+        "interior de palabra": 0.4899,
+        "inicio de palabra": 0.1873,
+        "inicio de oración o nombre propio": 0.1579,
+        "puntuación": 0.0
+      },
+      "Accuracy Test": {
+        "cierre de palabra (espacio)": 0.8628,
+        "interior de palabra": 0.4359,
+        "inicio de palabra": 0.1894,
+        "inicio de oración o nombre propio": 0.1,
+        "puntuación": 0.0264
+      },
+      "Perplejidad Test": {
+        "cierre de palabra (espacio)": 1.8321,
+        "interior de palabra": 7.0855,
+        "inicio de palabra": 17.1914,
+        "inicio de oración o nombre propio": 116.5457,
+        "puntuación": 62.9634
+      }
+    }
+  }
+}
